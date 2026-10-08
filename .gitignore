@@ -1,0 +1,21 @@
+# ambiente local e cópias do projeto analisado
+venv/
+repo/
+gravacao-repo/
+req-utf8.txt
+node_modules/
+
+# gravação bruta e arquivos temporários
+video/media/vscode-raw.webm
+video/snapshots/
+tools/cap/
+tools/*.log
+tools/*.png
+tools/*.json.tmp
+.playwright-mcp/
+deck/
+
+# arquivos de ferramentas de agente gerados pelo scaffold
+.claude/
+.agents/
+.hyperframes/

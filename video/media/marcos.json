@@ -1,0 +1,78 @@
+[
+ {
+  "id": "pronto",
+  "t": 24
+ },
+ {
+  "id": "arquivos",
+  "t": 25.51
+ },
+ {
+  "id": "models_veiculo",
+  "t": 31.05
+ },
+ {
+  "id": "models_reserva",
+  "t": 44.12
+ },
+ {
+  "id": "cap_const",
+  "t": 53.81
+ },
+ {
+  "id": "cap_regra",
+  "t": 64.83
+ },
+ {
+  "id": "periodo_data",
+  "t": 79.97
+ },
+ {
+  "id": "periodo_retorno",
+  "t": 91.21
+ },
+ {
+  "id": "conflito_services",
+  "t": 99.19
+ },
+ {
+  "id": "conflito_model",
+  "t": 109.44
+ },
+ {
+  "id": "disponibilidade",
+  "t": 123.96
+ },
+ {
+  "id": "rotas",
+  "t": 138.35
+ },
+ {
+  "id": "login",
+  "t": 152.18
+ },
+ {
+  "id": "transacao",
+  "t": 167.41
+ },
+ {
+  "id": "permissoes",
+  "t": 177.11
+ },
+ {
+  "id": "terminal",
+  "t": 186.57
+ },
+ {
+  "id": "testes",
+  "t": 201.4
+ },
+ {
+  "id": "ok",
+  "t": 270.6
+ },
+ {
+  "id": "fim",
+  "t": 277.6
+ }
+]

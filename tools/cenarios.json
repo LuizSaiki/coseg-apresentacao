@@ -1,0 +1,275 @@
+[
+  {
+    "cenario": "Conflito (9h-11h vs 8h-10h)",
+    "envio": {
+      "veiculo": 1,
+      "data": "2026-08-18",
+      "hora_saida": "09:00",
+      "hora_retorno": "11:00",
+      "passageiros": 2
+    },
+    "status": 409,
+    "resposta": {
+      "sucesso": false,
+      "mensagem": "Não foi possível registrar a reserva.",
+      "erros": {
+        "veiculo": [
+          {
+            "message": "Conflito: VL-01 já está reservado nesse intervalo (reserva #1 de VL-01 (18/08/2026 08:00 até 18/08/2026 10:00)).",
+            "code": "conflito_horario"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cenario": "Sem conflito (10h30-12h)",
+    "envio": {
+      "veiculo": 1,
+      "data": "2026-08-18",
+      "hora_saida": "10:30",
+      "hora_retorno": "12:00",
+      "passageiros": 2
+    },
+    "status": 201,
+    "resposta": {
+      "sucesso": true,
+      "mensagem": "Reserva registrada com sucesso.",
+      "reserva": {
+        "id": 5,
+        "solicitante": "Maria Souza",
+        "setor": "Operações",
+        "atividade": "Reunião externa",
+        "origem": "Porto do Itaqui",
+        "destino": "Centro",
+        "data": "2026-08-18",
+        "hora_saida": "10:30",
+        "data_retorno": "2026-08-18",
+        "hora_retorno": "12:00",
+        "passageiros": 2,
+        "veiculo": {
+          "id": 1,
+          "codigo": "VL-01",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        "categoria_pretendida": "",
+        "observacoes": "",
+        "status": "ATIVA",
+        "criado_por": "demo"
+      },
+      "avisos": []
+    }
+  },
+  {
+    "cenario": "Capacidade (7 pessoas em leve)",
+    "envio": {
+      "veiculo": 2,
+      "data": "2026-08-18",
+      "hora_saida": "08:00",
+      "hora_retorno": "09:00",
+      "passageiros": 7
+    },
+    "status": 400,
+    "resposta": {
+      "sucesso": false,
+      "mensagem": "Não foi possível registrar a reserva.",
+      "erros": {
+        "passageiros": [
+          {
+            "message": "O veículo VL-02 comporta 4 passageiros e foram solicitados 7.",
+            "code": "capacidade_excedida"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cenario": "Acima de 18",
+    "envio": {
+      "categoria_pretendida": "COLETIVO",
+      "data": "2026-08-21",
+      "hora_saida": "08:00",
+      "hora_retorno": "09:00",
+      "passageiros": 19
+    },
+    "status": 400,
+    "resposta": {
+      "sucesso": false,
+      "mensagem": "Não foi possível registrar a reserva.",
+      "erros": {
+        "passageiros": [
+          {
+            "message": "Solicitação rejeitada: o máximo é 18 passageiros.",
+            "code": "acima_do_limite"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cenario": "Retorno antes da saída",
+    "envio": {
+      "veiculo": 2,
+      "data": "2026-08-21",
+      "hora_saida": "10:00",
+      "hora_retorno": "09:00",
+      "passageiros": 2
+    },
+    "status": 400,
+    "resposta": {
+      "sucesso": false,
+      "mensagem": "Não foi possível registrar a reserva.",
+      "erros": {
+        "hora_retorno": [
+          {
+            "message": "O horário de retorno deve ser posterior ao de saída. Para viagens que passam da meia-noite, informe também a data_retorno.",
+            "code": "retorno_invalido"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cenario": "Atribuição automática por categoria",
+    "envio": {
+      "categoria_pretendida": "LEVE",
+      "data": "2026-08-18",
+      "hora_saida": "08:30",
+      "hora_retorno": "09:30",
+      "passageiros": 3
+    },
+    "status": 201,
+    "resposta": {
+      "sucesso": true,
+      "mensagem": "Reserva registrada com sucesso.",
+      "reserva": {
+        "id": 6,
+        "solicitante": "Maria Souza",
+        "setor": "Operações",
+        "atividade": "Reunião externa",
+        "origem": "Porto do Itaqui",
+        "destino": "Centro",
+        "data": "2026-08-18",
+        "hora_saida": "08:30",
+        "data_retorno": "2026-08-18",
+        "hora_retorno": "09:30",
+        "passageiros": 3,
+        "veiculo": {
+          "id": 2,
+          "codigo": "VL-02",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        "categoria_pretendida": "LEVE",
+        "observacoes": "",
+        "status": "ATIVA",
+        "criado_por": "demo"
+      },
+      "avisos": []
+    }
+  },
+  {
+    "cenario": "Campos obrigatórios",
+    "envio": {
+      "data": "2026-08-21"
+    },
+    "status": 400,
+    "resposta": {
+      "sucesso": false,
+      "mensagem": "Não foi possível registrar a reserva.",
+      "erros": {
+        "hora_saida": [
+          {
+            "message": "Este campo é obrigatório.",
+            "code": "required"
+          }
+        ],
+        "hora_retorno": [
+          {
+            "message": "Este campo é obrigatório.",
+            "code": "required"
+          }
+        ],
+        "passageiros": [
+          {
+            "message": "Este campo é obrigatório.",
+            "code": "required"
+          }
+        ],
+        "__all__": [
+          {
+            "message": "Informe o veículo ou a categoria pretendida.",
+            "code": "veiculo_obrigatorio"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cenario": "Disponibilidade 9h-11h, 3 pax",
+    "status": 200,
+    "resposta": {
+      "disponiveis": [
+        {
+          "id": 3,
+          "codigo": "VL-03",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        {
+          "id": 4,
+          "codigo": "VL-04",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        {
+          "id": 5,
+          "codigo": "VL-05",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        {
+          "id": 6,
+          "codigo": "VL-06",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        {
+          "id": 7,
+          "codigo": "VL-07",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        {
+          "id": 8,
+          "codigo": "VL-08",
+          "categoria": "LEVE",
+          "capacidade": 4,
+          "ativo": true
+        },
+        {
+          "id": 9,
+          "codigo": "VC-01",
+          "categoria": "COLETIVO",
+          "capacidade": 18,
+          "ativo": true
+        },
+        {
+          "id": 10,
+          "codigo": "VC-02",
+          "categoria": "COLETIVO",
+          "capacidade": 18,
+          "ativo": true
+        }
+      ]
+    }
+  }
+]

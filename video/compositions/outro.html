@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"/></head><body>
+<template>
+<style>.logo{position:absolute;width:340px;height:auto;border-radius:16px;box-shadow:0 8px 24px rgba(109,47,160,.18)}
+.chip{display:inline-block;font:700 34px system-ui,sans-serif;padding:10px 26px;border-radius:999px;border:3px solid #c62a88;color:#1b1033;background:#fff;margin-right:16px}
+#o-bg{position:absolute;inset:0;background:radial-gradient(1100px 700px at 0% 0%,#f3d9ec,transparent 60%),radial-gradient(900px 700px at 100% 100%,#e4d9f6,transparent 60%),#faf7fd}
+#o-logo{left:150px;top:100px}
+#o-t{position:absolute;left:150px;top:260px;width:1500px;font:900 92px/1.05 system-ui,sans-serif;letter-spacing:-.02em;color:#1b1033}
+#o-l{position:absolute;left:150px;top:600px;display:flex;flex-direction:column;gap:22px}
+.o-i{display:flex;align-items:center;gap:22px;font:700 50px/1.1 system-ui,sans-serif;color:#1b1033}
+.o-i i{flex:none;width:56px;height:56px;border-radius:50%;background:#1f9d6e;display:grid;place-items:center}
+#o-all{position:absolute;inset:0}</style>
+<div data-composition-id="outro" data-width="1920" data-height="1080" data-duration="6" style="position:absolute;inset:0">
+<div id="o-all"><div id="o-bg"></div>
+<img id="o-logo" class="logo" src="assets/logo-undb-claro.jpeg" alt="UNDB"/>
+<div id="o-t">O servidor Django é a fonte de verdade e barra os erros antes de gravar</div>
+<div id="o-l">
+<div class="o-i" id="o-i0"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i><span>42 testes automáticos passando</span></div>
+<div class="o-i" id="o-i1"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i><span>Capacidade, data, horário e conflito validados no servidor</span></div>
+<div class="o-i" id="o-i2"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i><span>Rotas organizadas e respostas claras em JSON</span></div>
+</div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#o-all",{opacity:0},{opacity:1,duration:.7,ease:"power2.out"},0);
+tl.fromTo("#o-logo",{opacity:0,y:-20},{opacity:1,y:0,duration:.7,ease:"power3.out"},.2);
+tl.fromTo("#o-t",{opacity:0,y:40},{opacity:1,y:0,duration:.9,ease:"power3.out"},.4);
+["#o-i0","#o-i1","#o-i2"].forEach((s,i)=>tl.fromTo(s,{opacity:0,x:-40},{opacity:1,x:0,duration:.7,ease:"power3.out"},1.3+i*.6));
+window.__timelines["outro"] = tl;
+</script>
+</template></body></html>

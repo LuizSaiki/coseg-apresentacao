@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"/></head><body>
+<template>
+<style>
+#capzona{position:absolute;left:135px;width:1650px;bottom:18px;height:100px}
+.cap{position:absolute;left:0;right:0;bottom:0;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 36px/1.22 system-ui,sans-serif;color:#fff;background:#1b1033;border-radius:16px;padding:12px 32px;border-left:10px solid #e5307f;box-shadow:0 8px 24px rgba(27,16,51,.25);opacity:0}
+#prog-t{position:absolute;left:135px;width:1650px;top:957px;height:5px;border-radius:3px;background:#d8cfe8}
+#prog{position:absolute;left:135px;width:1650px;top:957px;height:5px;border-radius:3px;background:linear-gradient(90deg,#e5303a,#c62a88,#6d2fa0);transform-origin:left center}</style>
+<div data-composition-id="legendas" data-width="1920" data-height="1080" data-duration="203.87" style="position:absolute;inset:0">
+<div id="prog-t"></div><div id="prog"></div><div id="capzona">
+<div id="cap0" class="cap">Este é o projeto COSEG aberto no VS Code. Tudo o que importa fica na pasta reservas.</div>
+<div id="cap1" class="cap">No arquivo models.py estão as tabelas do banco. Primeiro, o Veículo: código, categoria e capacidade.</div>
+<div id="cap2" class="cap">A capacidade vem da categoria: leve = 4 lugares, coletivo = 18.</div>
+<div id="cap3" class="cap">Depois, a Reserva: quem pediu, origem, destino, data, horários e passageiros.</div>
+<div id="cap4" class="cap">Cada reserva aponta para um veículo.</div>
+<div id="cap5" class="cap">Em services.py ficam as regras do negócio. A primeira é a capacidade: leve 4, coletivo 18.</div>
+<div id="cap6" class="cap">Acima de 18 passageiros, nunca; retorno no máximo 1 dia depois.</div>
+<div id="cap7" class="cap">De volta ao models.py: antes de salvar, o código compara os passageiros com a capacidade do veículo.</div>
+<div id="cap8" class="cap">Passou de 18, ou mais do que cabe no carro escolhido? Rejeita e explica o erro.</div>
+<div id="cap9" class="cap">Agora, a validação de datas. Se a data de saída já passou, o servidor devolve um erro.</div>
+<div id="cap10" class="cap">O trecho compara a data pedida com a data de hoje.</div>
+<div id="cap11" class="cap">E o horário de retorno precisa ser depois da saída; se não for, a reserva é recusada.</div>
+<div id="cap12" class="cap">O coração do sistema: há conflito se uma reserva começa antes de a outra terminar</div>
+<div id="cap13" class="cap">e termina depois de a outra começar (r.inicio &lt; fim e r.fim &gt; inicio).</div>
+<div id="cap14" class="cap">No models.py, a reserva consulta o banco antes de gravar e trava o veículo para ninguém reservar junto.</div>
+<div id="cap15" class="cap">Achou conflito? Devolve: “VL-01 já está reservado nesse intervalo”.</div>
+<div id="cap16" class="cap">Se o usuário só informa a categoria, o servidor escolhe o veículo: primeiro tira os que já estão ocupados.</div>
+<div id="cap17" class="cap">Depois ordena do menor para o maior e sugere o primeiro.</div>
+<div id="cap18" class="cap">O urls.py lista os endereços da API: veículos, reservas, cancelar e disponibilidade.</div>
+<div id="cap19" class="cap">É por esses endereços que a interface conversa com o servidor.</div>
+<div id="cap20" class="cap">No views.py, o login limita tentativas: depois de cinco erros, bloqueia por cinco minutos.</div>
+<div id="cap21" class="cap">Só usuários logados acessam o sistema.</div>
+<div id="cap22" class="cap">Ao criar uma reserva, tudo ocorre numa transação: ou valida e grava, ou nada é gravado.</div>
+<div id="cap23" class="cap">Só o COSEG pode alterar a frota,</div>
+<div id="cap24" class="cap">e cada colaborador só mexe nas próprias reservas.</div>
+<div id="cap25" class="cap">Agora, o sistema funcionando: pedidos de reserva reais disparados no terminal.</div>
+<div id="cap26" class="cap">9h às 11h bate com a reserva de 8h às 10h: conflito, código 409.</div>
+<div id="cap27" class="cap">10h30 às 12h passa (201). Carro lotado, 19 pessoas e retorno antes da saída: recusados (400).</div>
+<div id="cap28" class="cap">Por fim, os testes automáticos do projeto, que verificam todas essas regras.</div>
+<div id="cap29" class="cap">Resultado: 42 testes executados, todos passando.</div>
+</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#prog",{scaleX:0},{scaleX:1,duration:203.87,ease:"none"},0);
+tl.fromTo("#cap0",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},1.91);
+tl.to("#cap0",{opacity:0,y:-10,duration:.35,ease:"power2.in"},6.10);
+tl.fromTo("#cap1",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},7.45);
+tl.to("#cap1",{opacity:0,y:-10,duration:.35,ease:"power2.in"},13.09);
+tl.fromTo("#cap2",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},13.54);
+tl.to("#cap2",{opacity:0,y:-10,duration:.35,ease:"power2.in"},19.17);
+tl.fromTo("#cap3",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},20.52);
+tl.to("#cap3",{opacity:0,y:-10,duration:.35,ease:"power2.in"},24.46);
+tl.fromTo("#cap4",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},24.91);
+tl.to("#cap4",{opacity:0,y:-10,duration:.35,ease:"power2.in"},28.86);
+tl.fromTo("#cap5",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},30.21);
+tl.to("#cap5",{opacity:0,y:-10,duration:.35,ease:"power2.in"},34.82);
+tl.fromTo("#cap6",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},35.27);
+tl.to("#cap6",{opacity:0,y:-10,duration:.35,ease:"power2.in"},39.88);
+tl.fromTo("#cap7",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},41.23);
+tl.to("#cap7",{opacity:0,y:-10,duration:.35,ease:"power2.in"},47.90);
+tl.fromTo("#cap8",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},48.35);
+tl.to("#cap8",{opacity:0,y:-10,duration:.35,ease:"power2.in"},55.02);
+tl.fromTo("#cap9",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},56.37);
+tl.to("#cap9",{opacity:0,y:-10,duration:.35,ease:"power2.in"},61.09);
+tl.fromTo("#cap10",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},61.54);
+tl.to("#cap10",{opacity:0,y:-10,duration:.35,ease:"power2.in"},66.26);
+tl.fromTo("#cap11",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},67.61);
+tl.to("#cap11",{opacity:0,y:-10,duration:.35,ease:"power2.in"},74.24);
+tl.fromTo("#cap12",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},75.59);
+tl.to("#cap12",{opacity:0,y:-10,duration:.35,ease:"power2.in"},79.81);
+tl.fromTo("#cap13",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},80.26);
+tl.to("#cap13",{opacity:0,y:-10,duration:.35,ease:"power2.in"},84.49);
+tl.fromTo("#cap14",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},85.84);
+tl.to("#cap14",{opacity:0,y:-10,duration:.35,ease:"power2.in"},92.20);
+tl.fromTo("#cap15",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},92.65);
+tl.to("#cap15",{opacity:0,y:-10,duration:.35,ease:"power2.in"},99.01);
+tl.fromTo("#cap16",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},100.36);
+tl.to("#cap16",{opacity:0,y:-10,duration:.35,ease:"power2.in"},106.65);
+tl.fromTo("#cap17",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},107.1);
+tl.to("#cap17",{opacity:0,y:-10,duration:.35,ease:"power2.in"},113.40);
+tl.fromTo("#cap18",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},114.75);
+tl.to("#cap18",{opacity:0,y:-10,duration:.35,ease:"power2.in"},120.77);
+tl.fromTo("#cap19",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},121.22);
+tl.to("#cap19",{opacity:0,y:-10,duration:.35,ease:"power2.in"},127.23);
+tl.fromTo("#cap20",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},128.58);
+tl.to("#cap20",{opacity:0,y:-10,duration:.35,ease:"power2.in"},135.30);
+tl.fromTo("#cap21",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},135.75);
+tl.to("#cap21",{opacity:0,y:-10,duration:.35,ease:"power2.in"},142.46);
+tl.fromTo("#cap22",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},143.81);
+tl.to("#cap22",{opacity:0,y:-10,duration:.35,ease:"power2.in"},152.16);
+tl.fromTo("#cap23",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},153.51);
+tl.to("#cap23",{opacity:0,y:-10,duration:.35,ease:"power2.in"},157.34);
+tl.fromTo("#cap24",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},157.79);
+tl.to("#cap24",{opacity:0,y:-10,duration:.35,ease:"power2.in"},161.62);
+tl.fromTo("#cap25",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},162.97);
+tl.to("#cap25",{opacity:0,y:-10,duration:.35,ease:"power2.in"},167.16);
+tl.fromTo("#cap26",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},167.61);
+tl.to("#cap26",{opacity:0,y:-10,duration:.35,ease:"power2.in"},171.81);
+tl.fromTo("#cap27",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},172.26);
+tl.to("#cap27",{opacity:0,y:-10,duration:.35,ease:"power2.in"},176.45);
+tl.fromTo("#cap28",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},177.8);
+tl.to("#cap28",{opacity:0,y:-10,duration:.35,ease:"power2.in"},194.23);
+tl.fromTo("#cap29",{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:"power3.out"},195.58);
+tl.to("#cap29",{opacity:0,y:-10,duration:.35,ease:"power2.in"},202.92);
+window.__timelines["legendas"] = tl;
+</script>
+</template></body></html>
