@@ -186,7 +186,7 @@ export function cena(slide, idx, total, modo, S) {
       <div class="stripe" id="${id}-st1"></div><div class="stripe b" id="${id}-st2"></div>
       <div class="t" id="${id}-t">${esc(slide.titulo)}</div>
       <div class="sb" id="${id}-sb">${esc(slide.sub)}</div>
-      <div class="tags" id="${id}-tg">${slide.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div></div>`;
+      <div class="tags" id="${id}-tg">${(slide.tags || []).map(t) => `<span class="tag">${esc(t)}</span>`).join("")}</div></div>`;
   } else {
     const lis = slide.itens.map((it, k) => `<li id="${id}-li${k}"><span class="nb">${k + 1}</span><span>${esc(it.t)}</span></li>`).join("");
     slide.itens.forEach((_, k) => rev.push({ id: `${id}-li${k}`, passo: k }));

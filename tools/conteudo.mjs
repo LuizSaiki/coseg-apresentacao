@@ -1,4 +1,4 @@
-// Conteúdo único (slides + vídeo) da apresentação COSEG Mobilidade.
+// Conteúdo único (slides + vídeo) da apresentação FrotaCOSEG.
 // Os trechos de código são lidos direto do repositório, com os números de linha reais.
 import fs from "node:fs";
 import path from "node:path";
@@ -41,11 +41,21 @@ const urlLinha = (re) => achar("urls.py", re);
 export const slides = [
   {
     id: "capa", tipo: "capa",
-    titulo: "COSEG Mobilidade",
-    sub: "O servidor que impede conflitos na reserva de veículos do Porto do Itaqui",
-    tags: ["Programação para Web", "PBL 1", "Python + Django"],
+    titulo: "FrotaCOSEG",
+    sub: "O SISTEMA DE RESERVA DE VEÍCULOS DO PORTO DO ITAQUI",
+    tags: [],
     notas: "Apresente-se, diga o nome do grupo e o objetivo: mostrar como o servidor (a 'camada de servidor') do sistema de reservas funciona, sem precisar entender de programação.",
-    legenda: "Esta é a apresentação do COSEG Mobilidade: o servidor que controla as reservas de veículos do Porto do Itaqui.",
+    legenda: "Esta é a apresentação do FrotaCOSEG: o servidor que controla as reservas de veículos do Porto do Itaqui.",
+  },
+  {
+    id: "contexto", tipo: "visual", visual: "frota",
+    titulo: "O Porto do Itaqui divide uma frota de 10 veículos entre várias equipes",
+    itens: [
+      { t: "A frota tem 8 veículos leves, de até 4 passageiros.", l: "A frota do Porto do Itaqui tem oito veículos leves, com capacidade de até quatro passageiros." },
+      { t: "Há também 2 veículos coletivos, de até 18 passageiros.", l: "Há ainda dois veículos coletivos, que levam até dezoito passageiros." },
+      { t: "Os pedidos chegavam por telefone, mensagem, e-mail, balcão e planilhas.", l: "Os pedidos chegavam por vários canais, sem um padrão e sem um registro central." },
+    ],
+    notas: "Contexto: o Porto do Itaqui tem uma frota compartilhada (8 leves e 2 coletivos) usada por várias equipes. Os pedidos chegavam por canais diferentes, o que leva ao problema do próximo slide.",
   },
   {
     id: "problema", tipo: "visual", visual: "frota",
@@ -197,23 +207,10 @@ export const slides = [
     notas: "Estas respostas foram geradas rodando o sistema de verdade (modo demonstração, que aceita as datas de agosto de 2026 do enunciado). Os 42 testes automáticos do projeto também passaram.",
   },
   {
-    id: "conclusao", tipo: "visual", visual: "checklist",
-    titulo: "Resposta ao PBL: o servidor Django é a fonte de verdade e barra erros antes de gravar",
-    itens: [
-      { t: "Persiste os dados: banco, models e migrations.", l: "O servidor persiste os dados com banco, models e migrations." },
-      { t: "Aplica as regras de capacidade, data, horário e conflito.", l: "Aplica as regras de capacidade, data, horário e conflito antes de gravar qualquer coisa. Obrigado!" },
-      { t: "Rotas organizadas e respostas claras em JSON.", l: "E oferece rotas organizadas e respostas em JSON, com mensagens claras de erro e sucesso." },
-    ],
-    checks: [
-      { t: "Cadastro e persistência da frota", f: "models.py", p: 0 },
-      { t: "Estrutura de dados da reserva", f: "models.py", p: 0 },
-      { t: "Campos obrigatórios validados", f: "forms.py", p: 1 },
-      { t: "Capacidade do veículo validada", f: "models.py", p: 1 },
-      { t: "Data e horários validados", f: "services.py", p: 1 },
-      { t: "Conflitos reais, consultando o banco", f: "services.py", p: 1 },
-      { t: "Mensagens de erro e sucesso em JSON", f: "views.py", p: 2 },
-      { t: "Rotas organizadas para a interface", f: "urls.py", p: 2 },
-    ],
-    notas: "Feche respondendo à pergunta do enunciado: como desenvolver e justificar a camada de servidor. Passe pelas três linhas e abra para perguntas.",
+    id: "obrigado", tipo: "fim",
+    titulo: "Obrigado!",
+    equipe: ["Davi Maia", "Gabriel Dantas", "Juliana Silva", "Luiz Saiki", "Mie Shimpo"],
+    notas: "Agradeça e apresente os integrantes da equipe. Abra para perguntas.",
+    legenda: "Obrigado! Equipe: Davi Maia, Gabriel Dantas, Juliana Silva, Luiz Saiki e Mie Shimpo.",
   },
 ];

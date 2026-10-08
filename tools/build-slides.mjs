@@ -89,17 +89,23 @@ const secoes = slides.map((s, i) => {
   const num = `${String(i + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
   if (s.tipo === "capa") {
     return `<section class="slide capa" data-n="0" data-notes="${esc(s.notas)}">
-      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
       <img class="clogo rv" style="--d:.1s" src="${logo}" alt="UNDB Centro Universitário"/>
       <h1 class="rv" style="--d:.25s">${esc(s.titulo)}</h1>
       <div class="traco rv" style="--d:.45s"></div>
       <p class="sub rv" style="--d:.6s">${esc(s.sub)}</p>
-      <div class="tags rv" style="--d:.8s">${s.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+      ${s.tags.length ? `<div class="tags rv" style="--d:.8s">${s.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>` : ""}
+</section>`;
+  }
+  if (s.tipo === "fim") {
+    return `<section class="slide capa fim" data-n="0" data-notes="${esc(s.notas)}">
+      <img class="clogo rv" style="--d:.1s" src="${logo}" alt="UNDB Centro Universitário"/>
+      <h1 class="rv" style="--d:.25s">${esc(s.titulo)}</h1>
+      <div class="tags rv" style="--d:.8s">${s.equipe.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
 </section>`;
   }
   const cards = s.itens.map((it, k) => `<div class="card step" data-step="${k}"><span class="nb">${k + 1}</span><p>${esc(it.t)}</p></div>`).join("");
   return `<section class="slide" data-n="${s.itens.length}" data-notes="${esc(s.notas)}">
-    <header class="top rv" style="--d:0s"><img src="${logo}" alt="UNDB"/><span>COSEG Mobilidade · Programação para Web · PBL 1</span><span class="pg">${num}</span></header>
+    <header class="top rv" style="--d:0s"><img src="${logo}" alt="UNDB"/><span>FrotaCOSEG · Programação para Web · PBL 1</span><span class="pg">${num}</span></header>
     <h2 class="rv" style="--d:.08s">${esc(s.titulo)}</h2>
     <div class="vis rv" style="--d:.2s">${visual(s)}</div>
     <div class="side">${cards}</div></section>`;
@@ -161,17 +167,33 @@ h2:after{content:"";display:block;width:140px;height:8px;border-radius:4px;margi
 .capa .clogo{position:absolute;left:150px;top:80px;width:340px;height:auto;border-radius:16px;box-shadow:0 8px 24px rgba(109,47,160,.18)}
 .traco{width:240px;height:10px;border-radius:5px;margin:34px 0 30px;background:linear-gradient(90deg,var(--red),var(--mag),var(--pur));position:relative}
 .sub{font-size:56px;line-height:1.22;font-weight:600;color:#3a2a5c;max-width:1350px;position:relative}
-.tags{display:flex;gap:18px;margin-top:56px;position:relative}.tag{font-size:34px;font-weight:700;padding:10px 28px;border-radius:999px;border:3px solid var(--mag);background:#fff}
+.tags{display:flex;flex-wrap:wrap;gap:18px;margin-top:56px;position:relative}.tag{font-size:34px;font-weight:700;padding:10px 28px;border-radius:999px;border:3px solid var(--mag);background:#fff}
 .dica{position:absolute;left:150px;bottom:60px;font-size:26px;color:var(--mut)}
 .blob{position:absolute;border-radius:70px;animation:flutua 9s ease-in-out infinite alternate}
 .b1{right:-250px;top:-200px;width:600px;height:600px;transform:rotate(16deg);background:linear-gradient(135deg,var(--red),var(--mag) 55%,var(--pur));opacity:.92}
 .b2{right:140px;top:700px;width:260px;height:260px;transform:rotate(-9deg);background:linear-gradient(135deg,var(--mag),var(--pur));opacity:.5;animation-delay:-3s}
 .b3{right:70px;top:380px;width:150px;height:150px;border-radius:40px;background:var(--red);opacity:.35;animation-delay:-6s}
 @keyframes flutua{from{translate:0 0}to{translate:-22px 26px}}
+.fim{align-items:center;text-align:center}.fim .tags{justify-content:center;position:absolute;left:0;right:0;bottom:90px;margin-top:0}
 /* barra de progresso e notas */
 #prog{position:absolute;left:0;bottom:0;height:10px;width:0;background:linear-gradient(90deg,var(--red),var(--mag),var(--pur));transition:width .8s var(--ease);z-index:5}
 #notas{position:absolute;left:80px;right:80px;bottom:34px;background:var(--ink);color:#fff;border-radius:20px;padding:22px 32px;font-size:32px;line-height:1.3;z-index:6;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .4s ease,transform .6s var(--ease)}
 #notas.on{opacity:1;transform:none}#notas small{display:block;font-size:22px;color:#e7a6d0;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-weight:700}
+/* modo noturno (tecla D ou botão) */
+.noite{--ink:#f1eafc;--mut:#b9abd6;--line:#3b2d5c}
+.noite body,.noite html{background:#0b0716}
+.noite #stage{background:#140d27;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.noite #stage:before{background:radial-gradient(1000px 640px at 100% 0%,rgba(198,42,136,.22),transparent 62%),radial-gradient(900px 600px at 0% 100%,rgba(109,47,160,.3),transparent 62%)}
+.noite .card,.noite .code,.noite .panel,.noite .box,.noite .row,.noite .crow,.noite .tag{background:#1f1538}
+.noite .box.mid{background:#2d1546}
+.noite .code .tab,.noite .chip{background:#2a1d4a;border-color:#4a3a73}
+.noite .sub{color:#d8cdef}
+.noite .top img,.noite .capa .clogo{background:#fff;padding:4px}
+.noite .no{color:#9b8bbd}
+.noite .k{color:#e08bff}.noite .s{color:#ff9d8f}.noite .c{color:#7fd48a}.noite .n{color:#6fe0b0}.noite .f{color:#f0d56b}
+.noite .bd.a{background:#12402f;color:#8ff0c4}.noite .bd.b{background:#4a3410;color:#ffd48a}.noite .bd.c{background:#4a1820;color:#ffa3ad}
+.noite .okb{color:#6fe0b0}
+.noite #notas{background:#2a1d4a}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 /* modo PDF/impressão: ?pdf */
 .pdf html,.pdf body{overflow:visible;height:auto;background:#fff}.pdf #stage{position:static;transform:none!important;box-shadow:none;height:auto;overflow:visible}.pdf #stage:before{display:none}
@@ -203,6 +225,10 @@ const JS = `
     notas.innerHTML = "<small>Notas do apresentador</small>" + (el.dataset.notes || "");
     history.replaceState(null, "", "#" + (cur + 1));
   }
+  const root = document.documentElement;
+  const noite = (v) => { root.classList.toggle("noite", v); try { localStorage.setItem("noite", v ? "1" : "0"); } catch (_) {} };
+  let salvo = null; try { salvo = localStorage.getItem("noite"); } catch (_) {}
+  noite(salvo === "1");
   function proximo() { const n = +S[cur].dataset.n; if (step < n) step++; else if (cur < S.length - 1) { cur++; step = 0; } pintar(); }
   function voltar() { if (step > 0) step--; else if (cur > 0) { cur--; step = +S[cur].dataset.n; } pintar(); }
   addEventListener("keydown", (e) => {
@@ -210,6 +236,7 @@ const JS = `
     else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); voltar(); }
     else if (e.key === "Home") { cur = 0; step = 0; pintar(); }
     else if (e.key === "End") { cur = S.length - 1; step = +S[cur].dataset.n; pintar(); }
+    else if (e.key.toLowerCase() === "d") noite(!root.classList.contains("noite"));
     else if (e.key.toLowerCase() === "n") notas.classList.toggle("on");
     else if (e.key.toLowerCase() === "f") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
   });
@@ -223,7 +250,7 @@ const JS = `
 
 const html = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>COSEG Mobilidade — Apresentação</title><style>${CSS}</style></head>
+<title>FrotaCOSEG — Apresentação</title><style>${CSS}</style></head>
 <body><div id="stage">
 ${secoes}
 <div id="notas"></div><div id="prog"></div>
