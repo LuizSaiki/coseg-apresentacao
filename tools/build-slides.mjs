@@ -112,9 +112,7 @@ function visual(s) {
     case "placar":
       return `<div class="panel placar">
         ${st(0, "", `<div class="big"><b>41</b><span>de 41 casos<br>aprovados</span></div>
-        <div class="chips"><span class="chip">login</span><span class="chip">reservas</span><span class="chip">mensagens</span><span class="chip">frota</span><span class="chip">painel</span><span class="chip">celular</span></div>`)}
-        ${st(1, "fix", `${check}<span>4 problemas encontrados e corrigidos</span>`)}
-        ${st(2, "demo", `<small>Demonstração</small><b>coseg-mobilidade.vercel.app</b>`)}</div>`;
+        <div class="chips"><span class="chip">login</span><span class="chip">reservas</span><span class="chip">mensagens</span><span class="chip">frota</span><span class="chip">painel</span><span class="chip">celular</span></div>`)}</div>`;
     case "checklist":
       return `<div class="rows tight">` + s.checks.map((c) => st(c.p, "row chk", `${check}<span>${esc(c.t)}</span><em>${c.f}</em>`)).join("") + `</div>`;
   }
@@ -212,8 +210,6 @@ h2:after{content:"";display:block;width:140px;height:8px;border-radius:4px;margi
 .placar{display:flex;flex-direction:column;gap:34px}
 .big{display:flex;align-items:center;gap:30px}.big b{font-size:200px;line-height:1;font-weight:900;color:var(--mag)}.big span{font-size:48px;font-weight:800;line-height:1.15}
 .placar .chips{margin-top:20px}
-.placar .fix{display:flex;align-items:center;gap:16px;font-size:36px;font-weight:700;color:#0b6e4a}
-.placar .demo{border:3px dashed var(--pur);border-radius:18px;padding:18px 26px}.demo small{display:block;font-size:24px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}.demo b{font:800 40px ui-monospace,Consolas,monospace;color:var(--pur)}
 /* capa */
 .capa{padding:0 150px;display:flex;flex-direction:column;justify-content:center}
 .capa h1{font-size:176px;line-height:1;font-weight:900;letter-spacing:-.035em;position:relative}
@@ -247,9 +243,7 @@ h2:after{content:"";display:block;width:140px;height:8px;border-radius:4px;margi
 .noite .bd.a{background:#12402f;color:#8ff0c4}.noite .bd.b{background:#4a3410;color:#ffd48a}.noite .bd.c{background:#4a1820;color:#ffa3ad}
 .noite .okb{color:#6fe0b0}
 .noite #notas{background:#2a1d4a}
-.noite .shot{background:#1f1538}.noite .shot .bar{background:#2a1d4a;border-color:#4a3a73}.noite .fone{border-color:#3b2d5c}
-.noite .placar .fix{color:#6fe0b0}.noite .demo b{color:#d6a8ff}
-@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
+.noite .shot{background:#1f1538}.noite .shot .bar{background:#2a1d4a;border-color:#4a3a73}.noite .fone{border-color:#3b2d5c}@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 /* modo PDF/impressão: ?pdf */
 .pdf html,.pdf body{overflow:visible;height:auto;background:#fff}.pdf #stage{position:static;transform:none!important;box-shadow:none;height:auto;overflow:visible}.pdf #stage:before{display:none}
 .pdf .slide{position:relative;width:1920px;height:1080px;opacity:1;visibility:visible;transform:none;page-break-after:always;overflow:hidden;background:#faf7fd}

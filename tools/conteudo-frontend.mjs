@@ -122,10 +122,8 @@ export const slides = [
     titulo: "Testamos cada tela no navegador antes de entregar",
     itens: [
       { t: "41 casos de teste executados, todos aprovados." },
-      { t: "Os 4 problemas que o QA encontrou foram corrigidos." },
-      { t: "Há uma versão de demonstração publicada para testar." },
     ],
-    notas: "O QA passou por login, reservas, mensagens do servidor, frota, painel e responsividade. Os 4 problemas (data no painel, ações em reserva em andamento, filtros e ícone da aba) foram corrigidos antes desta versão. Na demonstração, as reservas criadas somem quando o servidor reinicia.",
+    notas: "O QA passou por login, reservas, mensagens do servidor, frota, painel e responsividade.",
   },
   {
     id: "obrigado", tipo: "fim",
