@@ -1,12 +1,32 @@
 // Gera slides/index.html: apresentação autônoma (HTML+CSS+JS puro, funciona offline), tema claro UNDB.
+// `node tools/build-slides.mjs frontend` gera slides-frontend/index.html a partir de conteudo-frontend.mjs.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { slides } from "./conteudo.mjs";
+const FRONT = process.argv[2] === "frontend";
+const { slides, deck = {} } = await import(FRONT ? "./conteudo-frontend.mjs" : "./conteudo.mjs");
 const aqui = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(aqui, "..", "slides");
+const OUT = path.join(aqui, "..", deck.saida || "slides");
 fs.mkdirSync(OUT, { recursive: true });
 const logo = "data:image/jpeg;base64," + fs.readFileSync(path.join(aqui, "..", "assets", "logo-undb-claro.jpeg")).toString("base64");
+const ROTULO = deck.rotulo || "FrotaCOSEG · Programação para Web · PBL 1";
+
+// Prints das telas (PNG embutido, para funcionar offline) e o tamanho original de cada um.
+function print(nome) {
+  const buf = fs.readFileSync(path.join(aqui, "..", "assets", "prints-frontend", nome + ".png"));
+  return { src: "data:image/png;base64," + buf.toString("base64"), w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+}
+const SHOT_W = 1100, SHOT_H = 676;
+function janela(s) {
+  const p = print(s.print), k = SHOT_W / p.w, topo = s.topo || 0;
+  const marcas = s.itens.map((it, i) => {
+    if (!it.m) return "";
+    const [x, y, w, h] = it.m;
+    return `<div class="mk step" data-step="${i}" style="left:${x * k - 6}px;top:${(y - topo) * k - 6}px;width:${w * k + 12}px;height:${h * k + 12}px"></div>`;
+  }).join("");
+  return `<div class="shot"><div class="bar"><i></i><i></i><i></i><span>coseg-mobilidade.vercel.app${esc(s.url || "")}</span></div>
+    <div class="tela" style="height:${SHOT_H}px"><img src="${p.src}" alt="" style="width:${SHOT_W}px;margin-top:${-topo * k}px"/>${marcas}</div></div>`;
+}
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const KW = new Set("from import def return if elif else for in not and or is None True False class with try except raise as lambda".split(" "));
@@ -78,6 +98,23 @@ function visual(s) {
       return `<div class="rows tight">` + s.cenarios.map((c) => st(c.p, "crow", `<div class="n2"><b>${esc(c.n)}</b><span>${esc(c.m)}</span></div><div class="bd ${cls[c.c]}">${c.c}</div>`)).join("") +
         `<div class="okb">${check}<span>42 testes automáticos do projeto: todos passaram</span></div></div>`;
     }
+    case "print":
+      return janela(s);
+    case "arq2":
+      return `<div class="arq">
+        ${st(1, "box mid", `<b>Telas</b><span>o que a pessoa vê e usa no navegador</span>`)}
+        ${st(1, "arr", "")}
+        ${st(0, "box", `<b>Servidor Django</b><span>confere as regras (1ª apresentação)</span>`)}
+        <div class="arr"></div>
+        ${st(0, "box", `<b>Banco de dados</b><span>guarda as reservas</span>`)}</div>`;
+    case "celulares":
+      return `<div class="fones">` + s.celulares.map((n, i) => st(i, "fone", `<img src="${print(n).src}" alt=""/>`)).join("") + `</div>`;
+    case "placar":
+      return `<div class="panel placar">
+        ${st(0, "", `<div class="big"><b>41</b><span>de 41 casos<br>aprovados</span></div>
+        <div class="chips"><span class="chip">login</span><span class="chip">reservas</span><span class="chip">mensagens</span><span class="chip">frota</span><span class="chip">painel</span><span class="chip">celular</span></div>`)}
+        ${st(1, "fix", `${check}<span>4 problemas encontrados e corrigidos</span>`)}
+        ${st(2, "demo", `<small>Demonstração</small><b>coseg-mobilidade.vercel.app</b>`)}</div>`;
     case "checklist":
       return `<div class="rows tight">` + s.checks.map((c) => st(c.p, "row chk", `${check}<span>${esc(c.t)}</span><em>${c.f}</em>`)).join("") + `</div>`;
   }
@@ -105,7 +142,7 @@ const secoes = slides.map((s, i) => {
   }
   const cards = s.itens.map((it, k) => `<div class="card step" data-step="${k}"><span class="nb">${k + 1}</span><p>${esc(it.t)}</p></div>`).join("");
   return `<section class="slide" data-n="${s.itens.length}" data-notes="${esc(s.notas)}">
-    <header class="top rv" style="--d:0s"><img src="${logo}" alt="UNDB"/><span>FrotaCOSEG · Programação para Web · PBL 1</span><span class="pg">${num}</span></header>
+    <header class="top rv" style="--d:0s"><img src="${logo}" alt="UNDB"/><span>${ROTULO}</span><span class="pg">${num}</span></header>
     <h2 class="rv" style="--d:.08s">${esc(s.titulo)}</h2>
     <div class="vis rv" style="--d:.2s">${visual(s)}</div>
     <div class="side">${cards}</div></section>`;
@@ -161,6 +198,22 @@ h2:after{content:"";display:block;width:140px;height:8px;border-radius:4px;margi
 .crow .n2{flex:1;min-width:0}.crow .n2 b{display:block;font-size:29px;line-height:1.15}.crow .n2 span{display:block;font-size:24px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bd{flex:none;font-size:30px;font-weight:800;padding:5px 18px;border-radius:10px}.bd.a{background:#d6f4e7;color:#0b5c3e}.bd.b{background:#ffecc7;color:#7a4300}.bd.c{background:#ffdde0;color:#9c1020}
 .okb{display:flex;align-items:center;gap:14px;margin-top:6px;font-size:30px;font-weight:700;color:#0b6e4a}
+/* prints das telas */
+.shot{width:1100px;background:#fff;border:2px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(109,47,160,.16)}
+.shot .bar{height:40px;display:flex;align-items:center;gap:9px;padding:0 18px;background:#f2ecfa;border-bottom:2px solid var(--line)}
+.shot .bar i{width:13px;height:13px;border-radius:50%;background:#d9c9ef}.shot .bar i:first-child{background:var(--red)}
+.shot .bar span{margin-left:14px;font:600 20px ui-monospace,Consolas,monospace;color:var(--mut)}
+.tela{position:relative;overflow:hidden}.tela img{display:block}
+.mk.step{position:absolute;border:5px solid var(--mag);border-radius:16px;box-shadow:0 0 0 9999px rgba(27,16,51,.28),0 0 24px rgba(198,42,136,.5);opacity:0;transform:none;transition:opacity .45s ease}
+.mk.step.now{opacity:1}
+.fones{display:flex;gap:44px;height:720px;align-items:flex-start}
+.fone{width:330px;height:700px;border:10px solid var(--ink);border-radius:46px;overflow:hidden;background:#eef0f3;box-shadow:0 14px 40px rgba(27,16,51,.25)}
+.fone img{width:100%;display:block}
+.placar{display:flex;flex-direction:column;gap:34px}
+.big{display:flex;align-items:center;gap:30px}.big b{font-size:200px;line-height:1;font-weight:900;color:var(--mag)}.big span{font-size:48px;font-weight:800;line-height:1.15}
+.placar .chips{margin-top:20px}
+.placar .fix{display:flex;align-items:center;gap:16px;font-size:36px;font-weight:700;color:#0b6e4a}
+.placar .demo{border:3px dashed var(--pur);border-radius:18px;padding:18px 26px}.demo small{display:block;font-size:24px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}.demo b{font:800 40px ui-monospace,Consolas,monospace;color:var(--pur)}
 /* capa */
 .capa{padding:0 150px;display:flex;flex-direction:column;justify-content:center}
 .capa h1{font-size:176px;line-height:1;font-weight:900;letter-spacing:-.035em;position:relative}
@@ -194,11 +247,13 @@ h2:after{content:"";display:block;width:140px;height:8px;border-radius:4px;margi
 .noite .bd.a{background:#12402f;color:#8ff0c4}.noite .bd.b{background:#4a3410;color:#ffd48a}.noite .bd.c{background:#4a1820;color:#ffa3ad}
 .noite .okb{color:#6fe0b0}
 .noite #notas{background:#2a1d4a}
+.noite .shot{background:#1f1538}.noite .shot .bar{background:#2a1d4a;border-color:#4a3a73}.noite .fone{border-color:#3b2d5c}
+.noite .placar .fix{color:#6fe0b0}.noite .demo b{color:#d6a8ff}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 /* modo PDF/impressão: ?pdf */
 .pdf html,.pdf body{overflow:visible;height:auto;background:#fff}.pdf #stage{position:static;transform:none!important;box-shadow:none;height:auto;overflow:visible}.pdf #stage:before{display:none}
 .pdf .slide{position:relative;width:1920px;height:1080px;opacity:1;visibility:visible;transform:none;page-break-after:always;overflow:hidden;background:#faf7fd}
-.pdf .rv,.pdf .step{opacity:1!important;transform:none!important}.pdf .step.grow .bl{transform:none!important}.pdf .ln{opacity:1!important}.pdf #prog,.pdf #notas,.pdf .dica{display:none}
+.pdf .rv,.pdf .step{opacity:1!important;transform:none!important}.pdf .step.grow .bl{transform:none!important}.pdf .ln{opacity:1!important}.pdf .mk.step{display:none}.pdf #prog,.pdf #notas,.pdf .dica{display:none}
 @page{size:1920px 1080px;margin:0}`;
 
 const JS = `
@@ -213,7 +268,7 @@ const JS = `
   function pintar() {
     S.forEach((el, i) => { el.classList.toggle("on", i === cur); el.classList.toggle("before", i < cur); el.classList.toggle("after", i > cur); });
     const el = S[cur], k = step - 1;
-    el.querySelectorAll(".step").forEach((e) => e.classList.toggle("shown", +e.dataset.step < step));
+    el.querySelectorAll(".step").forEach((e) => { e.classList.toggle("shown", +e.dataset.step < step); e.classList.toggle("now", +e.dataset.step === step - 1); });
     el.querySelectorAll(".ln").forEach((l) => {
       l.classList.remove("cur", "dim", "past");
       if (step === 0 || l.dataset.p === undefined) { if (step > 0) l.classList.add("dim"); return; }
@@ -250,7 +305,7 @@ const JS = `
 
 const html = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>FrotaCOSEG — Apresentação</title><style>${CSS}</style></head>
+<title>${deck.tituloPagina || "FrotaCOSEG — Apresentação"}</title><style>${CSS}</style></head>
 <body><div id="stage">
 ${secoes}
 <div id="notas"></div><div id="prog"></div>

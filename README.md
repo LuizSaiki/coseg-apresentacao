@@ -10,6 +10,11 @@ baseado no repositório `Dantas-PRO/COSEG_beta` (Python + Django). Programação
 | `slides/index.html` | Slides. Abra no navegador (funciona offline). Setas ou espaço avançam; **N** mostra as notas do apresentador; **F** tela cheia. |
 | `slides/COSEG-Mobilidade-slides.pdf` | Os mesmos slides em PDF (reserva). |
 | `video/renders/COSEG-Mobilidade-video.mp4` | Vídeo (3 min 34 s, sem áudio, com legendas): passeio real pelo código no VS Code, terminal rodando os pedidos e os 42 testes. |
+| `slides-frontend/index.html` | **Segunda apresentação (PBL 2): o front-end.** 13 slides explicando cada tela com o print real e um destaque por item, sem código. Mesmas teclas (N, F, D). |
+| `slides-frontend/FrotaCOSEG-frontend-slides.pdf` | Os slides do front-end em PDF (reserva). |
+
+Os prints do front-end (`assets/prints-frontend/`) vêm de `docs/evidencias/kaseki/` na branch `frontend` do
+`LuizSaiki/COSEG_beta`. Para regerar: `node tools/build-slides.mjs frontend` (conteúdo em `tools/conteudo-frontend.mjs`).
 
 ## Como regenerar (opcional)
 
